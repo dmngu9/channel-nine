@@ -21,10 +21,11 @@ app.use((req, res, next) => {
     });
 });
 
-app.post('/', (req, res) => {
-    const data = req.body;
-    console.log(data, typeof data);
-    res.status(304).send('hey its cool');
+app.post('/*', (req, res) => {
+    const payload = req.body.payload;
+    const response = parseJSONPayload(payload);
+    
+    res.status(304).json({ response: response });
 });
 
 app.listen(PORT, () => {
