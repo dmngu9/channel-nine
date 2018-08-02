@@ -1,4 +1,8 @@
 function parseJSONPayload(payload) {
+    if (!payload) {
+        return [];
+    }
+    
     return payload.reduce((response, show) => {
         if (show.drm && show.episodeCount > 0) {
             const newShow = {
@@ -13,4 +17,4 @@ function parseJSONPayload(payload) {
     }, []);
 }
 
-module.exports = parseJSONPayload;
+module.exports.parseJSONPayload = parseJSONPayload;

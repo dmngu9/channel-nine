@@ -1,4 +1,4 @@
-const parseJSONPayload = require('./utils');
+const utils = require('./utils');
 
 describe('parse JSON payload', () => {
     it('should return result in right format for show with drm enabled and episodeCount > 0', () => {
@@ -66,7 +66,7 @@ describe('parse JSON payload', () => {
             }
         ];
 
-        const response = parseJSONPayload(payload);
+        const response = utils.parseJSONPayload(payload);
 
         expect(response).toEqual(
             [
@@ -97,7 +97,7 @@ describe('parse JSON payload', () => {
             tvChannel: 'Nine'
         }];
 
-        const response = parseJSONPayload(payload);
+        const response = utils.parseJSONPayload(payload);
 
         expect(response).toEqual([
             {
@@ -111,7 +111,13 @@ describe('parse JSON payload', () => {
     it ('should return empty response array if payload is empty', () => {
         const payload = [];
 
-        const response = parseJSONPayload(payload);
+        const response = utils.parseJSONPayload(payload);
+
+        expect(response).toEqual([]);
+    });
+
+    it ('should return empty response array if payload is undefined', () => {
+        const response = utils.parseJSONPayload(undefined);
 
         expect(response).toEqual([]);
     });
