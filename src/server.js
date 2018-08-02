@@ -21,10 +21,14 @@ app.use((req, res, next) => {
     });
 });
 
+app.get('/*', (req, res) => {
+    res.status(200).send('Welcome to Channel 9 page');
+});
+
 app.post('/*', (req, res) => {
     const payload = req.body.payload;
     const response = parseJSONPayload(payload);
-    
+
     res.status(304).json({ response: response });
 });
 
