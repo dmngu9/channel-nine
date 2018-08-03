@@ -6,8 +6,8 @@ describe('Server', () => {
     it ('should return 400 when having invalid json in request payload', (done) => {
         request(server)
             .post('/')
-            .send([])
-            .set('Accept', 'application/json')
+            .send('{"invalid}')
+            .set('Content-Type', 'application/json')
             .expect(400)
             .then(res => {
                 expect(res.body).toEqual({
@@ -115,6 +115,52 @@ describe('Server', () => {
         request(server)
             .post('/')
             .send('minh')
+            .set('Accept', 'application/json')
+            .expect(200)
+            .then(res => {
+                expect(res.body).toEqual({
+                    response: []
+                });
+                done();
+            });
+    });
+
+    it ('should return with empty response when request body is not defined', (done) => {
+        request(server)
+            .post('/')
+            .set('Accept', 'application/json')
+            .expect(200)
+            .then(res => {
+                expect(res.body).toEqual({
+                    response: []
+                });
+                done();
+            });
+    });
+
+    it ('should return with empty response when request body have empty payload', (done) => {
+        request(server)
+            .post('/')
+            .send({
+                payload: []
+            })
+            .set('Accept', 'application/json')
+            .expect(200)
+            .then(res => {
+                expect(res.body).toEqual({
+                    response: []
+                });
+                done();
+            });
+    });
+
+    it ('should return with empty response when request body does not have payload property', (done) => {
+        request(server)
+            .post('/')
+            .send({
+                total: 10
+            })
+            .set('Accept', 'application/json')
             .expect(200)
             .then(res => {
                 expect(res.body).toEqual({
